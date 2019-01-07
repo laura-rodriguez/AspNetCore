@@ -12,7 +12,7 @@ using Microsoft.Net.Http.Headers;
 
 namespace Microsoft.AspNetCore.Http.Internal
 {
-    public class DefaultHttpRequest : HttpRequest
+    public sealed class DefaultHttpRequest : HttpRequest
     {
         // Lambdas hoisted to static readonly fields to improve inlining https://github.com/dotnet/roslyn/issues/13624
         private readonly static Func<IFeatureCollection, IHttpRequestFeature> _nullRequestFeature = f => null;
