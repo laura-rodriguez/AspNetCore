@@ -28,16 +28,16 @@ namespace Microsoft.AspNetCore.Http.Internal
             Initialize(context);
         }
 
-        public virtual void Initialize(HttpContext context)
+        public void Initialize(HttpContext context)
         {
             _context = context;
             _features = new FeatureReferences<FeatureInterfaces>(context.Features);
         }
 
-        public virtual void Uninitialize()
+        public void Uninitialize()
         {
             _context = null;
-            _features = default(FeatureReferences<FeatureInterfaces>);
+            _features = default;
         }
 
         public override HttpContext HttpContext => _context;
