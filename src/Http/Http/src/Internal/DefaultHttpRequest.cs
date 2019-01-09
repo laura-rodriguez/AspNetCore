@@ -20,15 +20,15 @@ namespace Microsoft.AspNetCore.Http.Internal
         private readonly static Func<IFeatureCollection, IRequestCookiesFeature> _newRequestCookiesFeature = f => new RequestCookiesFeature(f);
         private readonly static Func<IFeatureCollection, IRouteValuesFeature> _newRouteValuesFeature = f => new RouteValuesFeature();
 
-        private HttpContext _context;
+        private DefaultHttpContext _context;
         private FeatureReferences<FeatureInterfaces> _features;
 
-        public DefaultHttpRequest(HttpContext context)
+        public DefaultHttpRequest(DefaultHttpContext context)
         {
             Initialize(context);
         }
 
-        public void Initialize(HttpContext context)
+        public void Initialize(DefaultHttpContext context)
         {
             _context = context;
             _features = new FeatureReferences<FeatureInterfaces>(context.Features);
