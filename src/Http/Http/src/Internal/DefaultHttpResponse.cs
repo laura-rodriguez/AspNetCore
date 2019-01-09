@@ -17,23 +17,22 @@ namespace Microsoft.AspNetCore.Http.Internal
         private readonly static Func<IFeatureCollection, IResponseCookiesFeature> _newResponseCookiesFeature = f => new ResponseCookiesFeature(f);
         private readonly static Func<HttpContext, IResponseBodyPipeFeature> _newResponseBodyPipeFeature = context => new ResponseBodyPipeFeature(context);
 
-        private DefaultHttpContext _context;
+        private readonly DefaultHttpContext _context;
         private FeatureReferences<FeatureInterfaces> _features;
 
         public DefaultHttpResponse(DefaultHttpContext context)
         {
-            Initialize(context);
+            _context = context;
+            _features = new FeatureReferences<FeatureInterfaces>(_context.Features);
         }
 
-        public void Initialize(DefaultHttpContext context)
+        public void Initialize()
         {
-            _context = context;
-            _features = new FeatureReferences<FeatureInterfaces>(context.Features);
+            _features = new FeatureReferences<FeatureInterfaces>(_context.Features);
         }
 
         public void Uninitialize()
         {
-            _context = null;
             _features = default;
         }
 

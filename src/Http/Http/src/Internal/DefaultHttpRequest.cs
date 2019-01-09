@@ -22,23 +22,22 @@ namespace Microsoft.AspNetCore.Http.Internal
         private readonly static Func<IFeatureCollection, IRouteValuesFeature> _newRouteValuesFeature = f => new RouteValuesFeature();
         private readonly static Func<HttpContext, IRequestBodyPipeFeature> _newRequestBodyPipeFeature = context => new RequestBodyPipeFeature(context);
 
-        private DefaultHttpContext _context;
+        private readonly DefaultHttpContext _context;
         private FeatureReferences<FeatureInterfaces> _features;
 
         public DefaultHttpRequest(DefaultHttpContext context)
         {
-            Initialize(context);
+            _context = context;
+            _features = new FeatureReferences<FeatureInterfaces>(_context.Features);
         }
 
-        public void Initialize(DefaultHttpContext context)
+        public void Initialize()
         {
-            _context = context;
-            _features = new FeatureReferences<FeatureInterfaces>(context.Features);
+            _features = new FeatureReferences<FeatureInterfaces>(_context.Features);
         }
 
         public void Uninitialize()
         {
-            _context = null;
             _features = default;
         }
 
