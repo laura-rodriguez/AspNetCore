@@ -24,8 +24,8 @@ namespace Microsoft.AspNetCore.Http
 
         private FeatureReferences<FeatureInterfaces> _features;
 
-        private DefaultHttpRequest _request;
-        private DefaultHttpResponse _response;
+        private readonly DefaultHttpRequest _request;
+        private readonly DefaultHttpResponse _response;
 
         private DefaultConnectionInfo _connection;
         private DefaultWebSocketManager _websockets;
@@ -47,8 +47,8 @@ namespace Microsoft.AspNetCore.Http
         public void Initialize(IFeatureCollection features)
         {
             _features = new FeatureReferences<FeatureInterfaces>(features);
-            _request.Initialize(this);
-            _response.Initialize(this);
+            _request.Initialize();
+            _response.Initialize();
             _connection?.Initialize(features);
             _websockets?.Initialize(features);
         }
@@ -56,7 +56,6 @@ namespace Microsoft.AspNetCore.Http
         public void Uninitialize()
         {
             _features = default;
-
             _request.Uninitialize();
             _response.Uninitialize();
             _connection?.Uninitialize();
