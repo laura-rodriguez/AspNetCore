@@ -32,8 +32,13 @@ namespace Microsoft.AspNetCore.Http.Features
             Form = form;
         }
         public FormFeature(HttpRequest request)
-            : this(request, DefaultFormOptions)
+            : this(request, GetDefaults(request))
         {
+        }
+
+        private static FormOptions GetDefaults(HttpRequest request)
+        {
+            return (request.HttpContext as DefaultHttpContext)?.FormOptions ?? DefaultFormOptions;
         }
 
         public FormFeature(HttpRequest request, FormOptions options)
@@ -48,7 +53,7 @@ namespace Microsoft.AspNetCore.Http.Features
             }
 
             _request = request;
-            _options = (request.HttpContext is DefaultHttpContext defaultHttpContext) ? defaultHttpContext.FormOptions ?? options : options;
+            _options = options;
         }
 
         private MediaTypeHeaderValue ContentType
