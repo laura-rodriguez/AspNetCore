@@ -48,7 +48,7 @@ namespace Microsoft.AspNetCore.Http.Features
             }
 
             _request = request;
-            _options = options;
+            _options = (request.HttpContext is DefaultHttpContext defaultHttpContext) ? defaultHttpContext.FormOptions ?? options : options;
         }
 
         private MediaTypeHeaderValue ContentType
